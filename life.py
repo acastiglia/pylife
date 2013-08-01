@@ -8,10 +8,10 @@ email:  castiglia.anthony@gmail.com
 
 import os
 import random
+import sys
 from argparse import ArgumentParser
 from itertools import product
 from time import sleep
-from sys import exit
 
 NEIGHBOR_COORDINATES = [(-1, -1), (-1, 0), (-1, 1), (0, 1), 
                         (1, 1), (1, 0), (1, -1), (0, -1)]
@@ -88,7 +88,8 @@ if __name__ == '__main__':
         try:
             os.system('clear')
             print world
+            sys.stdout.flush() # smoother animation
             world.advance()
-            sleep(0.13)
+            sleep(0.05)
         except KeyboardInterrupt:
             exit(0)
