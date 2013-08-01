@@ -1,13 +1,17 @@
 #!/usr/bin/env python
-#
-# Conway's Game of life, implemented in Python
-# author: Anthony Castiglia
+
+"""Conway's Game of life, implemented in Python
+
+author: Anthony Castiglia
+email:  castiglia.anthony@gmail.com
+"""
 
 import os
 import random
 from argparse import ArgumentParser
 from itertools import product
 from time import sleep
+from sys import exit
 
 NEIGHBOR_COORDINATES = [(-1, -1), (-1, 0), (-1, 1), (0, 1), 
                         (1, 1), (1, 0), (1, -1), (0, -1)]
@@ -24,7 +28,7 @@ class World(object):
                 self.cells[i][j] = True
 
     def neighbors(self, i, j):
-        for m, n in :
+        for m, n in NEIGHBOR_COORDINATES:
             yield self.cells[(i+m) % self.height][(j+n) % self.width]
 
 
@@ -55,15 +59,18 @@ class World(object):
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-r', '--random', action='store_true', dest='rand', 
-                        default=True)
+                        default=True, help='randomize the board\'s initial '
+                        +'state')
     parser.add_argument('--height', action='store', type=int, dest='h',
-                        default=24)
+                        default=24, help='height of the board')
     parser.add_argument('--width', action='store', type=int, dest='w',
-                        default=80)
+                        default=80, help='width of the board')
     parser.add_argument('--density', action='store', type=float, dest='d',
-                        default=0.5)
+                        default=0.5, help='specify the approximate initial '
+                        +'density of live cells')
     parser.add_argument('--repr', action='store', type=str, dest='rep',
-                        default='+')
+                        default='+', help='specify the character or string ' 
+                        +'used to represent each cell')
 
     args = parser.parse_args()
     
@@ -78,7 +85,10 @@ if __name__ == '__main__':
     world = World(args.w, args.h, initial_state, args.rep)
     
     while(True):
-        os.system('clear')
-        print world
-        world.advance()
-        sleep(0.13)
+        try:
+            os.system('clear')
+            print world
+            world.advance()
+            sleep(0.13)
+        except KeyboardInterrupt:
+            exit(0)
