@@ -48,14 +48,7 @@ class World(object):
         cell_strs = [[self.cell_repr if c else ' ' for c in row] 
                      for row in self.cells]
         return '\n'.join([' '.join(row) for row in cell_strs])
-
-    def run(self):
-        while(True):
-           os.system('clear')
-           print world
-           world.advance()
-           sleep(0.17)       
-               
+ 
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-r', '--random', action='store_true', dest='rand', 
